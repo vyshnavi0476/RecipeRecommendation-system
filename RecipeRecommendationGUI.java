@@ -7,11 +7,12 @@ import java.util.Map;
 
 class Recipe {
     String name;
+    String imagePath;
     String[] ingredients;
+
     static Map<String, String[]> ingredientSubstitutions = new HashMap<>();
 
     static {
-        // Taste-based ingredient substitutions
         ingredientSubstitutions.put("tomato sauce", new String[]{"tomato", "ketchup", "pureed tomato"});
         ingredientSubstitutions.put("butter", new String[]{"ghee"});
         ingredientSubstitutions.put("milk", new String[]{"almond milk", "soy milk", "coconut milk"});
@@ -36,9 +37,10 @@ class Recipe {
         ingredientSubstitutions.put("hazelnut", new String[]{"almond"});
     }
 
-    public Recipe(String name, String[] ingredients) {
+    public Recipe(String name, String[] ingredients, String imagePath) {
         this.name = name;
         this.ingredients = ingredients;
+        this.imagePath = imagePath;
     }
 
     public int countMissingIngredients(String[] availableIngredients) {
@@ -87,11 +89,12 @@ public class RecipeRecommendationGUI extends JFrame implements ActionListener {
     private JTextField ingredientsInput;
     private JTextArea outputArea;
     private JButton recommendButton;
+    private JLabel imageLabel;
     private Recipe[] recipes;
 
     public RecipeRecommendationGUI() {
         setTitle("Recipe Recommendation System");
-        setSize(500, 400);
+        setSize(600, 500);  // Reduced window size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -105,33 +108,48 @@ public class RecipeRecommendationGUI extends JFrame implements ActionListener {
         topPanel.add(ingredientsInput, BorderLayout.CENTER);
         topPanel.add(recommendButton, BorderLayout.SOUTH);
 
+        // Image label
+        imageLabel = new JLabel();
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setVerticalAlignment(JLabel.CENTER);
+        imageLabel.setPreferredSize(new Dimension(300, 200)); // COMPRESSION - smaller size!
+
+        JPanel imagePanel = new JPanel(new BorderLayout());
+        imagePanel.setPreferredSize(new Dimension(350, 250));
+        imagePanel.setBorder(BorderFactory.createTitledBorder("Recipe Image"));
+        imagePanel.add(imageLabel, BorderLayout.CENTER);
+
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2));
+        centerPanel.add(new JScrollPane(outputArea));
+        centerPanel.add(imagePanel);
+
         add(topPanel, BorderLayout.NORTH);
-        add(new JScrollPane(outputArea), BorderLayout.CENTER);
+        add(centerPanel, BorderLayout.CENTER);
 
         recommendButton.addActionListener(this);
 
         recipes = new Recipe[]{
-            new Recipe("Pasta", new String[]{"pasta", "tomato sauce", "cheese"}),
-            new Recipe("Omelette", new String[]{"egg", "salt", "butter"}),
-            new Recipe("Salad", new String[]{"lettuce", "tomato", "cucumber", "olive oil"}),
-            new Recipe("Grilled Cheese", new String[]{"bread", "cheese", "butter"}),
-            new Recipe("Fruit Smoothie", new String[]{"banana", "milk", "honey"}),
-            new Recipe("Tomato Curry", new String[]{"tomato", "onions", "chilli powder", "oil", "salt"}),
-            new Recipe("Paneer Butter Masala", new String[]{"paneer", "tomato puree", "onion", "butter", "spices", "cream"}),
-            new Recipe("Curd Rice", new String[]{"rice", "curd", "salt", "mustard seeds", "green chilli"}),
-            new Recipe("Cutlet", new String[]{"potato", "garam masala", "bread crumbs", "chilli powder", "rice flour"}),
-            new Recipe("Paratha", new String[]{"wheat flour", "chickpeas", "ghee"}),
-            new Recipe("Paneer Wrap", new String[]{"bread", "paneer", "onion", "tomato sauce", "cheese"}),
-            new Recipe("Butter Chicken", new String[]{"chicken", "butter", "tomato", "curd", "garam masala", "spices"}),
-            new Recipe("Fish Fry", new String[]{"fish", "ginger garlic paste", "chilli powder", "salt"}),
-            new Recipe("Prawns Curry", new String[]{"prawns", "tomato", "oil", "mustard seeds", "onions", "spices"}),
-            new Recipe("Eggplant Curry", new String[]{"eggplant", "spices", "onion", "curd", "tomato"}),
-            new Recipe("Sandwich", new String[]{"bread", "butter", "tomato", "onion", "capsicum", "pepper", "salt"}),
-            new Recipe("Palak Paneer", new String[]{"paneer", "spinach", "tomato", "garam masala", "chilli powder", "kasuri methi"}),
-            new Recipe("Kadai Chicken", new String[]{"chicken", "chicken masala", "onion", "tomato", "capsicum", "red chilli", "ginger garlic paste"}),
-            new Recipe("Chicken Lollipop", new String[]{"chicken", "tomato sauce", "ginger garlic paste", "garam masala"}),
-            new Recipe("Sambar", new String[]{"sambar powder", "onion", "dal", "tamarind paste"}),
-            new Recipe("Rasam", new String[]{"rasam powder", "pepper", "tamarind"})
+            new Recipe("Pasta", new String[]{"pasta", "tomato sauce", "cheese"}, "pasta.jpg"),
+            new Recipe("Omelette", new String[]{"egg", "salt", "butter"}, "omelette.jpg"),
+            new Recipe("Salad", new String[]{"lettuce", "tomato", "cucumber", "olive oil"}, "salad.jpg"),
+            new Recipe("Grilled Cheese", new String[]{"bread", "cheese", "butter"}, "grilled_cheese.jpg"),
+            new Recipe("Fruit Smoothie", new String[]{"banana", "milk", "honey"}, "fruit_smoothie.jpg"),
+            new Recipe("Tomato Curry", new String[]{"tomato", "onions", "chilli powder", "oil", "salt"}, "tomato_curry.jpg"),
+            new Recipe("Paneer Butter Masala", new String[]{"paneer", "tomato puree", "onion", "butter", "spices", "cream"}, "paneer_butter_masala.jpg"),
+            new Recipe("Curd Rice", new String[]{"rice", "curd", "salt", "mustard seeds", "green chilli"}, "curd_rice.jpg"),
+            new Recipe("Cutlet", new String[]{"potato", "garam masala", "bread crumbs", "chilli powder", "rice flour"}, "cutlet.jpg"),
+            new Recipe("Paratha", new String[]{"wheat flour", "chickpeas", "ghee"}, "paratha.jpg"),
+            new Recipe("Paneer Wrap", new String[]{"bread", "paneer", "onion", "tomato sauce", "cheese"}, "paneer_wrap.jpg"),
+            new Recipe("Butter Chicken", new String[]{"chicken", "butter", "tomato", "curd", "garam masala", "spices"}, "butter_chicken.jpg"),
+            new Recipe("Fish Fry", new String[]{"fish", "ginger garlic paste", "chilli powder", "salt"}, "fish_fry.jpg"),
+            new Recipe("Prawns Curry", new String[]{"prawns", "tomato", "oil", "mustard seeds", "onions", "spices"}, "prawns_curry.jpg"),
+            new Recipe("Eggplant Curry", new String[]{"eggplant", "spices", "onion", "curd", "tomato"}, "eggplant_curry.jpg"),
+            new Recipe("Sandwich", new String[]{"bread", "butter", "tomato", "onion", "capsicum", "pepper", "salt"}, "sandwich.jpg"),
+            new Recipe("Palak Paneer", new String[]{"paneer", "spinach", "tomato", "garam masala", "chilli powder", "kasuri methi"}, "palak_paneer.jpg"),
+            new Recipe("Kadai Chicken", new String[]{"chicken", "chicken masala", "onion", "tomato", "capsicum", "red chilli", "ginger garlic paste"}, "kadai_chicken.jpg"),
+            new Recipe("Chicken Lollipop", new String[]{"chicken", "tomato sauce", "ginger garlic paste", "garam masala"}, "chicken_lollipop.jpg"),
+            new Recipe("Sambar", new String[]{"sambar powder", "onion", "dal", "tamarind paste"}, "sambar.jpg"),
+            new Recipe("Rasam", new String[]{"rasam powder", "pepper", "tamarind"}, "rasam.jpg")
         };
     }
 
@@ -154,8 +172,15 @@ public class RecipeRecommendationGUI extends JFrame implements ActionListener {
         if (bestMatch != null) {
             outputArea.setText("Closest Matching Recipe: " + bestMatch.name + "\n");
             outputArea.append("Missing Ingredients: " + bestMatch.getMissingIngredients(availableIngredients));
+
+            // Load and scale the image perfectly compressed
+            ImageIcon icon = new ImageIcon(bestMatch.imagePath);
+            Image img = icon.getImage();
+            Image scaledImg = img.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+            imageLabel.setIcon(new ImageIcon(scaledImg));
         } else {
             outputArea.setText("No suitable recipe found.");
+            imageLabel.setIcon(null);
         }
     }
 
@@ -165,3 +190,4 @@ public class RecipeRecommendationGUI extends JFrame implements ActionListener {
         });
     }
 }
+
