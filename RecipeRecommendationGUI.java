@@ -129,17 +129,17 @@ public class RecipeRecommendationGUI extends JFrame implements ActionListener {
         recommendButton.addActionListener(this);
 
         recipes = new Recipe[]{
-            new Recipe("Pasta", new String[]{"pasta", "tomato sauce", "cheese"}, "pasta.jpg"),
+            new Recipe("Pasta", new String[]{"pasta", "tomato sauce", "cheese"}, "pasta.jpeg"),
             new Recipe("Omelette", new String[]{"egg", "salt", "butter"}, "omelette.jpg"),
             new Recipe("Salad", new String[]{"lettuce", "tomato", "cucumber", "olive oil"}, "salad.jpg"),
-            new Recipe("Grilled Cheese", new String[]{"bread", "cheese", "butter"}, "grilled_cheese.jpg"),
-            new Recipe("Fruit Smoothie", new String[]{"banana", "milk", "honey"}, "fruit_smoothie.jpg"),
+            new Recipe("Grilled Cheese", new String[]{"bread", "cheese", "butter"}, "Grilled Cheese.jpg"),
+            new Recipe("Fruit Smoothie", new String[]{"blueberry", "milk", "honey"}, "fruit_smoothie.jpg"),
             new Recipe("Tomato Curry", new String[]{"tomato", "onions", "chilli powder", "oil", "salt"}, "tomato_curry.jpg"),
             new Recipe("Paneer Butter Masala", new String[]{"paneer", "tomato puree", "onion", "butter", "spices", "cream"}, "paneer_butter_masala.jpg"),
             new Recipe("Curd Rice", new String[]{"rice", "curd", "salt", "mustard seeds", "green chilli"}, "curd_rice.jpg"),
             new Recipe("Cutlet", new String[]{"potato", "garam masala", "bread crumbs", "chilli powder", "rice flour"}, "cutlet.jpg"),
             new Recipe("Paratha", new String[]{"wheat flour", "chickpeas", "ghee"}, "paratha.jpg"),
-            new Recipe("Paneer Wrap", new String[]{"bread", "paneer", "onion", "tomato sauce", "cheese"}, "paneer_wrap.jpg"),
+            new Recipe("Paneer Wrap", new String[]{"bread", "paneer", "onion", "tomato sauce", "cheese"}, "panner_wrap.jpg"),
             new Recipe("Butter Chicken", new String[]{"chicken", "butter", "tomato", "curd", "garam masala", "spices"}, "butter_chicken.jpg"),
             new Recipe("Fish Fry", new String[]{"fish", "ginger garlic paste", "chilli powder", "salt"}, "fish_fry.jpg"),
             new Recipe("Prawns Curry", new String[]{"prawns", "tomato", "oil", "mustard seeds", "onions", "spices"}, "prawns_curry.jpg"),
